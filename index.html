@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roue de la Fortune</title>
+    <title>Wheel of Fortune</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="wheelContainer">
-        <canvas id="wheelCanvas" width="500" height="500"></canvas>
-        <div id="wheelPointer"></div>
+    <div class="container">
+        <div class="wheel-container">
+            <canvas id="wheel" width="500" height="500"></canvas>
+            <div class="needle"></div>
+        </div>
+        <button id="spin-button">Spin the Wheel!</button>
+        <div id="result"></div>
     </div>
-    <button id="spinButton">Tourner la Roue</button>
-    <p id="resultText">Appuyez sur le bouton pour jouer!</p>
-
+    <audio id="spin-sound" src="sound.mp3"></audio>
+    <audio id="jackpot-sound" src="jackpot.mp3"></audio>
     <script src="popup.js"></script>
 </body>
 </html>
