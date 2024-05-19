@@ -10,25 +10,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const segmentAngle = 2 * Math.PI / numSegments;
     let isSpinning = false;
 
+    // Set the canvas size to the container's size
+    function resizeCanvas() {
+        const container = document.querySelector('.wheel-container');
+        wheelCanvas.width = container.clientWidth;
+        wheelCanvas.height = container.clientHeight;
+        drawWheel();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
     // Draw the wheel
     function drawWheel() {
+        const radius = wheelCanvas.width / 2;
         for (let i = 0; i < numSegments; i++) {
             wheelCtx.beginPath();
-            wheelCtx.moveTo(250, 250);
-            wheelCtx.arc(250, 250, 250, i * segmentAngle, (i + 1) * segmentAngle);
+            wheelCtx.moveTo(radius, radius);
+            wheelCtx.arc(radius, radius, radius, i * segmentAngle, (i + 1) * segmentAngle);
             wheelCtx.fillStyle = i % 2 === 0 ? '#ffcc00' : '#ff9900';
             wheelCtx.fill();
             wheelCtx.save();
-            wheelCtx.translate(250, 250);
+            wheelCtx.translate(radius, radius);
             wheelCtx.rotate((i + 0.5) * segmentAngle);
             wheelCtx.fillStyle = 'black';
-            wheelCtx.font = '24px Arial';
-            wheelCtx.fillText(wheelValues[i] + '€', 100, 10);
+            wheelCtx.font = `${radius / 10}px Arial`;
+            wheelCtx.fillText(wheelValues[i] + '€', radius / 2, 10);
             wheelCtx.restore();
         }
     }
-
-    drawWheel();
 
     // Spin the wheel
     spinButton.addEventListener('click', () => {
@@ -52,11 +62,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         function drawRotatedWheel(angle) {
-            wheelCtx.clearRect(0, 0, 500, 500);
+            const radius = wheelCanvas.width / 2;
+            wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
             wheelCtx.save();
-            wheelCtx.translate(250, 250);
+            wheelCtx.translate(radius, radius);
             wheelCtx.rotate(angle);
-            wheelCtx.translate(-250, -250);
+            wheelCtx.translate(-radius, -radius);
             drawWheel();
             wheelCtx.restore();
         }
